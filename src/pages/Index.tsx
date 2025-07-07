@@ -1,12 +1,241 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useState, useEffect, useCallback } from 'react';
+import { Book } from '@/types/book';
+import { BookAPI } from '@/lib/api';
+import { StorageManager } from '@/lib/storage';
+import Navigation from '@/components/Navigation';
+import BookGrid from '@/components/BookGrid';
+import SearchBar from '@/components/SearchBar';
+import BookDetails from '@/components/BookDetails';
+import PreferencesPanel from '@/components/PreferencesPanel';
+import { useToast } from '@/hooks/use-toast';
+
+type ActiveView = 'home' | 'search' | 'downloads' | 'preferences' | 'book-details';
 
 const Index = () => {
+  const [activeView, setActiveView] = useState<ActiveView>('home');
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [recentBooks, setRecentBooks] = useState<Book[]>([]);
+  const [searchResults, setSearchResults] = useState<Book[]>([]);
+  const [downloads, setDownloads] = useState<(Book & { downloadedAt: string })[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [fontSize, setFontSize] = useState<'small' | 'medium' | 'large'>('medium');
+  const { toast } = useToast();
+
+  // Initialize preferences
+  useEffect(() => {
+    const savedTheme = StorageManager.getTheme();
+    const savedFontSize = StorageManager.getFontSize();
+    
+    setTheme(savedTheme);
+    setFontSize(savedFontSize);
+    
+    StorageManager.setTheme(savedTheme);
+    StorageManager.setFontSize(savedFontSize);
+  }, []);
+
+  // Load recent books on mount
+  useEffect(() => {
+    loadRecentBooks();
+    loadDownloads();
+  }, []);
+
+  const loadRecentBooks = async () => {
+    try {
+      setLoading(true);
+      
+      // Check cache first
+      const cached = StorageManager.getCacheItem<Book[]>('recent_books');
+      if (cached) {
+        setRecentBooks(cached);
+        setLoading(false);
+        return;
+      }
+
+      const books = await BookAPI.getRecentBooks();
+      setRecentBooks(books);
+      StorageManager.setCacheItem('recent_books', books, 1800000); // 30 minutes cache
+    } catch (error) {
+      console.error('Failed to load recent books:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load recent books. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadDownloads = () => {
+    const downloadedBooks = StorageManager.getDownloads();
+    setDownloads(downloadedBooks);
+  };
+
+  const handleSearch = useCallback(async (query: string) => {
+    if (!query.trim()) {
+      setSearchResults([]);
+      return;
+    }
+
+    try {
+      setSearchLoading(true);
+      
+      // Check cache first
+      const cacheKey = `search_${query.toLowerCase()}`;
+      const cached = StorageManager.getCacheItem<Book[]>(cacheKey);
+      if (cached) {
+        setSearchResults(cached);
+        setSearchLoading(false);
+        return;
+      }
+
+      const books = await BookAPI.searchBooks(query);
+      setSearchResults(books);
+      StorageManager.setCacheItem(cacheKey, books, 900000); // 15 minutes cache
+    } catch (error) {
+      console.error('Search failed:', error);
+      toast({
+        title: "Search Error",
+        description: "Failed to search books. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setSearchLoading(false);
+    }
+  }, [toast]);
+
+  const handleBookClick = async (book: Book) => {
+    try {
+      // For basic book info, we can show details immediately
+      // For full details, we might want to fetch more info
+      const cacheKey = `book_${book.id}`;
+      const cached = StorageManager.getCacheItem<Book>(cacheKey);
+      
+      if (cached) {
+        setSelectedBook(cached);
+      } else {
+        try {
+          const detailedBook = await BookAPI.getBookDetails(book.id);
+          setSelectedBook(detailedBook);
+          StorageManager.setCacheItem(cacheKey, detailedBook, 3600000); // 1 hour cache
+        } catch (error) {
+          // If detailed fetch fails, use the basic book info
+          setSelectedBook(book);
+        }
+      }
+      
+      setActiveView('book-details');
+    } catch (error) {
+      console.error('Failed to load book details:', error);
+      setSelectedBook(book); // Fallback to basic info
+      setActiveView('book-details');
+    }
+  };
+
+  const handleTabChange = (tab: 'home' | 'search' | 'downloads' | 'preferences') => {
+    setActiveView(tab);
+    if (tab === 'downloads') {
+      loadDownloads(); // Refresh downloads when tab is opened
+    }
+  };
+
+  const handleThemeChange = (newTheme: 'light' | 'dark') => {
+    setTheme(newTheme);
+    StorageManager.setTheme(newTheme);
+  };
+
+  const handleFontSizeChange = (newSize: 'small' | 'medium' | 'large') => {
+    setFontSize(newSize);
+    StorageManager.setFontSize(newSize);
+  };
+
+  const renderContent = () => {
+    switch (activeView) {
+      case 'home':
+        return (
+          <div className="p-6">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                Recently Added Books
+              </h2>
+              <BookGrid
+                books={recentBooks}
+                onBookClick={handleBookClick}
+                loading={loading}
+              />
+            </div>
+          </div>
+        );
+
+      case 'search':
+        return (
+          <div className="p-6">
+            <div className="max-w-7xl mx-auto">
+              <div className="mb-8">
+                <SearchBar
+                  onSearch={handleSearch}
+                  loading={searchLoading}
+                  placeholder="Search for books..."
+                />
+              </div>
+              <BookGrid
+                books={searchResults}
+                onBookClick={handleBookClick}
+                loading={searchLoading}
+                showDescription={true}
+              />
+            </div>
+          </div>
+        );
+
+      case 'downloads':
+        return (
+          <div className="p-6">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                Your Library ({downloads.length} books)
+              </h2>
+              <BookGrid
+                books={downloads}
+                onBookClick={handleBookClick}
+              />
+            </div>
+          </div>
+        );
+
+      case 'preferences':
+        return (
+          <PreferencesPanel
+            theme={theme}
+            fontSize={fontSize}
+            onThemeChange={handleThemeChange}
+            onFontSizeChange={handleFontSizeChange}
+          />
+        );
+
+      case 'book-details':
+        return selectedBook ? (
+          <BookDetails
+            book={selectedBook}
+            onBack={() => setActiveView('home')}
+          />
+        ) : null;
+
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+      <Navigation
+        activeTab={activeView === 'book-details' ? 'home' : activeView as any}
+        onTabChange={handleTabChange}
+      />
+      {renderContent()}
     </div>
   );
 };
