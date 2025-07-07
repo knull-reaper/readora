@@ -1,4 +1,6 @@
 
+import { Book, RecentBooksResponse, SearchBooksResponse, BookDetailsResponse } from '@/types/book';
+
 const BASE_URL = 'https://www.dbooks.org/api';
 
 export class BookAPI {

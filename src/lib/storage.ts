@@ -1,4 +1,6 @@
 
+import { Book } from '@/types/book';
+
 export class StorageManager {
   // Cache management
   static setCacheItem(key: string, data: any, ttl: number = 3600000): void {
