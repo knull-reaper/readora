@@ -30,7 +30,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange, theme, 
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-2">
             <Book className="w-8 h-8 text-primary" />
-            <h1 className="text-2xl font-bold text-foreground">Redora</h1>
+            <h1 className="text-2xl font-bold text-foreground">Readora</h1>
           </div>
           
           <div className="flex items-center space-x-2">

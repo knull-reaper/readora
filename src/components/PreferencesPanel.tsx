@@ -107,11 +107,11 @@ const PreferencesPanel: React.FC<PreferencesPanelProps> = ({
             {/* Info Card */}
             <Card className="gradient-card shadow-card backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-2xl">About Redora</CardTitle>
+                <CardTitle className="text-2xl">About Readora</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Redora is your personal digital library for discovering, downloading, and organizing books. 
+                  Readora is your personal digital library for discovering, downloading, and organizing books. 
                   You can now toggle between light and dark mode using the button in the navigation bar.
                 </p>
               </CardContent>
