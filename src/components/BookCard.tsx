@@ -13,7 +13,7 @@ interface BookCardProps {
 const BookCard: React.FC<BookCardProps> = ({ book, onClick, showDescription = false }) => {
   return (
     <Card 
-      className="group cursor-pointer transition-all duration-500 hover:scale-[1.02] gradient-card shadow-card hover:shadow-elegant backdrop-blur-sm relative overflow-hidden animate-fade-in"
+      className="group cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] gradient-card shadow-card hover:shadow-elegant backdrop-blur-sm relative overflow-hidden animate-fade-in touch-manipulation"
       onClick={() => onClick(book)}
     >
       {/* Gradient overlay for extra depth */}

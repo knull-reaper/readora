@@ -33,21 +33,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange, theme, 
             <h1 className="text-2xl font-bold text-foreground">Readora</h1>
           </div>
           
-          <div className="flex items-center space-x-2">
-            {/* Theme Toggle */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleTheme}
-              className="w-10 h-10 p-0 rounded-full hover:bg-primary/10 transition-colors"
-            >
-              {theme === 'light' ? (
-                <Moon className="w-4 h-4" />
-              ) : (
-                <Sun className="w-4 h-4" />
-              )}
-            </Button>
-
+          <div className="flex items-center space-x-1">
             {/* Navigation Tabs */}
             <div className="flex space-x-1">
               {tabs.map((tab) => {
@@ -58,14 +44,28 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange, theme, 
                     variant={activeTab === tab.id ? "default" : "ghost"}
                     size="sm"
                     onClick={() => onTabChange(tab.id)}
-                    className="flex items-center space-x-2 px-4 py-2"
+                    className="flex items-center space-x-1 px-3 py-2 min-h-[44px] touch-manipulation"
                   >
-                    <Icon className="w-4 h-4" />
-                    <span className="hidden sm:inline">{tab.label}</span>
+                    <Icon className="w-5 h-5" />
+                    <span className="hidden sm:inline text-sm">{tab.label}</span>
                   </Button>
                 );
               })}
             </div>
+            
+            {/* Theme Toggle */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleTheme}
+              className="w-11 h-11 p-0 rounded-full hover:bg-primary/10 transition-colors touch-manipulation"
+            >
+              {theme === 'light' ? (
+                <Moon className="w-5 h-5" />
+              ) : (
+                <Sun className="w-5 h-5" />
+              )}
+            </Button>
           </div>
         </div>
       </div>
