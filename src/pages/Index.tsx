@@ -159,13 +159,13 @@ const Index = () => {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5 -z-10" />
             
-            <div className="p-6">
-              <div className="max-w-7xl mx-auto">
-                <div className="flex items-center justify-between mb-8 animate-fade-in">
-                  <h2 className="text-3xl font-bold text-foreground">
+            <div className="p-3">
+              <div className="w-full">
+                <div className="flex items-center justify-between mb-4 animate-fade-in">
+                  <h2 className="text-xl font-bold text-foreground">
                     Recently Added Books
                   </h2>
-                  <div className="text-sm text-muted-foreground bg-primary/20 px-4 py-2 rounded-full border border-primary/30">
+                  <div className="text-xs text-muted-foreground bg-primary/20 px-3 py-1.5 rounded-full border border-primary/30">
                     {recentBooks.length} books
                   </div>
                 </div>
@@ -184,31 +184,31 @@ const Index = () => {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5 -z-10" />
             
-            <div className="p-6">
-              <div className="max-w-7xl mx-auto">
+            <div className="p-3">
+              <div className="w-full">
                 {/* Search Header */}
-                <div className="text-center py-12 animate-fade-in">
-                  <h1 className="text-4xl font-bold text-foreground mb-4">
+                <div className="text-center py-6 animate-fade-in">
+                  <h1 className="text-2xl font-bold text-foreground mb-2">
                     Search Library
                   </h1>
-                  <p className="text-lg text-muted-foreground mb-8">
-                    Find your next great read from thousands of books
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Find your next great read
                   </p>
                   
-                  <div className="max-w-2xl mx-auto">
+                  <div className="w-full">
                     <SearchBar
                       onSearch={handleSearch}
                       loading={searchLoading}
-                      placeholder="Search for books, authors, or topics..."
+                      placeholder="Search books, authors..."
                     />
                   </div>
                 </div>
 
                 {/* Results */}
                 {searchResults.length > 0 && (
-                  <div className="mb-6">
-                    <h2 className="text-2xl font-semibold text-foreground mb-6">
-                      Search Results ({searchResults.length} books)
+                  <div className="mb-4">
+                    <h2 className="text-lg font-semibold text-foreground mb-3">
+                      Search Results ({searchResults.length})
                     </h2>
                   </div>
                 )}
@@ -229,14 +229,14 @@ const Index = () => {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5 -z-10" />
             
-            <div className="p-6">
-              <div className="max-w-7xl mx-auto">
-                <div className="text-center py-12 animate-fade-in">
-                  <h1 className="text-4xl font-bold text-foreground mb-4">
+            <div className="p-3">
+              <div className="w-full">
+                <div className="text-center py-6 animate-fade-in">
+                  <h1 className="text-2xl font-bold text-foreground mb-2">
                     Your Library
                   </h1>
-                  <p className="text-lg text-muted-foreground mb-8">
-                    {downloads.length} books in your personal collection
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {downloads.length} books in your collection
                   </p>
                 </div>
                 <BookGrid

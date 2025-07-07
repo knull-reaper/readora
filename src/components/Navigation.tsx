@@ -26,26 +26,19 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange, theme, 
 
   return (
     <nav className="gradient-card backdrop-blur-sm border-b border-border/50 sticky top-0 z-50 shadow-card">
-      <div className="w-full px-2 sm:px-4">
-        <div className="flex justify-between items-center h-14 sm:h-16">
-          <div className="flex items-center space-x-2 flex-shrink-0">
-            {/* Mobile logo - just R */}
-            <div className="sm:hidden">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold text-lg">
-                R
-              </div>
+      <div className="w-full px-3">
+        <div className="flex justify-between items-center h-12">
+          <div className="flex items-center space-x-2 flex-shrink-0 min-w-0">
+            {/* Compact logo for mobile */}
+            <div className="w-7 h-7 bg-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold text-sm flex-shrink-0">
+              R
             </div>
-            
-            {/* Desktop logo - full name */}
-            <div className="hidden sm:flex items-center space-x-2">
-              <Book className="w-6 h-6 lg:w-8 lg:h-8 text-primary flex-shrink-0" />
-              <h1 className="text-lg lg:text-2xl font-bold text-foreground whitespace-nowrap">Readora</h1>
-            </div>
+            <h1 className="text-base font-bold text-foreground truncate">Readora</h1>
           </div>
           
-          <div className="flex items-center space-x-1 flex-shrink-0">
-            {/* Navigation Tabs */}
-            <div className="flex space-x-0.5 sm:space-x-1">
+          <div className="flex items-center flex-shrink-0">
+            {/* Navigation Tabs - more compact */}
+            <div className="flex">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 return (
@@ -54,10 +47,13 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange, theme, 
                     variant={activeTab === tab.id ? "default" : "ghost"}
                     size="sm"
                     onClick={() => onTabChange(tab.id)}
-                    className="flex items-center space-x-1 px-2 sm:px-3 py-2 min-h-[40px] sm:min-h-[44px] touch-manipulation text-xs sm:text-sm"
+                    className={`flex items-center justify-center w-10 h-10 p-0 touch-manipulation ${
+                      activeTab === tab.id 
+                        ? 'bg-primary text-primary-foreground shadow-sm' 
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    }`}
                   >
-                    <Icon className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-                    <span className="hidden md:inline whitespace-nowrap">{tab.label}</span>
+                    <Icon className="w-4 h-4" />
                   </Button>
                 );
               })}
@@ -68,12 +64,12 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange, theme, 
               variant="ghost"
               size="sm"
               onClick={toggleTheme}
-              className="w-10 h-10 sm:w-11 sm:h-11 p-0 rounded-full hover:bg-primary/10 transition-colors touch-manipulation flex-shrink-0 ml-1"
+              className="w-10 h-10 p-0 ml-1 touch-manipulation text-muted-foreground hover:text-foreground hover:bg-muted/50"
             >
               {theme === 'light' ? (
-                <Moon className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Moon className="w-4 h-4" />
               ) : (
-                <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Sun className="w-4 h-4" />
               )}
             </Button>
           </div>

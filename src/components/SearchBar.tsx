@@ -28,15 +28,15 @@ const SearchBar: React.FC<SearchBarProps> = ({
   }, []);
 
   return (
-    <div className="relative w-full max-w-lg mx-auto">
+    <div className="relative w-full">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
         <Input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder}
-          className="pl-10 pr-10 py-3 text-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="pl-10 pr-10 py-2.5 text-sm gradient-card border-border bg-background text-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary touch-manipulation"
           disabled={loading}
         />
         {query && (
@@ -45,7 +45,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
             variant="ghost"
             size="sm"
             onClick={handleClear}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100 dark:hover:bg-gray-700"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-muted/50 touch-manipulation"
           >
             <X className="w-4 h-4" />
           </Button>
@@ -53,7 +53,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       </div>
       {loading && (
         <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
         </div>
       )}
     </div>
