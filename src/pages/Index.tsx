@@ -3,12 +3,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Book } from '@/types/book';
 import { BookAPI } from '@/lib/api';
 import { StorageManager } from '@/lib/storage';
-import Navigation from '@/components/Navigation';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/AppSidebar';
 import BookGrid from '@/components/BookGrid';
 import SearchBar from '@/components/SearchBar';
 import BookDetails from '@/components/BookDetails';
 import PreferencesPanel from '@/components/PreferencesPanel';
 import { useToast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 type ActiveView = 'home' | 'search' | 'downloads' | 'preferences' | 'book-details';
 
@@ -186,23 +188,25 @@ const Index = () => {
             
             <div className="p-3">
               <div className="w-full">
-                {/* Search Header */}
-                <div className="text-center py-6 animate-fade-in">
-                  <h1 className="text-2xl font-bold text-foreground mb-2">
-                    Search Library
-                  </h1>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Find your next great read
-                  </p>
-                  
-                  <div className="w-full">
-                    <SearchBar
-                      onSearch={handleSearch}
-                      loading={searchLoading}
-                      placeholder="Search books, authors..."
-                    />
+                {/* Search Header - only show on desktop */}
+                {!isMobile && (
+                  <div className="text-center py-6 animate-fade-in">
+                    <h1 className="text-2xl font-bold text-foreground mb-2">
+                      Search Library
+                    </h1>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Find your next great read
+                    </p>
+                    
+                    <div className="w-full">
+                      <SearchBar
+                        onSearch={handleSearch}
+                        loading={searchLoading}
+                        placeholder="Search books, authors..."
+                      />
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Results */}
                 {searchResults.length > 0 && (
@@ -269,18 +273,67 @@ const Index = () => {
     }
   };
 
+  const isMobile = useIsMobile();
+
   return (
-    <div className="h-screen flex flex-col overflow-hidden transition-all duration-500">
-      <Navigation
-        activeTab={activeView === 'book-details' ? 'home' : activeView as any}
-        onTabChange={handleTabChange}
-        theme={theme}
-        onThemeChange={handleThemeChange}
-      />
-      <div className="flex-1 overflow-y-auto">
-        {renderContent()}
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full">
+        {isMobile && (
+          <AppSidebar
+            activeTab={activeView === 'book-details' ? 'home' : activeView as any}
+            onTabChange={handleTabChange}
+            theme={theme}
+            onThemeChange={handleThemeChange}
+          />
+        )}
+        
+        <div className="flex-1 flex flex-col min-h-screen">
+          {/* Mobile header with trigger and search */}
+          {isMobile && (
+            <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50 p-3">
+              <div className="flex items-center gap-3">
+                <SidebarTrigger className="h-8 w-8 p-0" />
+                {activeView === 'search' && (
+                  <div className="flex-1">
+                    <SearchBar
+                      onSearch={handleSearch}
+                      loading={searchLoading}
+                      placeholder="Search books, authors..."
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          
+          {/* Desktop navigation fallback */}
+          {!isMobile && (
+            <div className="sticky top-0 z-50 bg-background border-b border-border/50 p-4">
+              <div className="flex items-center justify-between">
+                <h1 className="text-xl font-bold">Readora</h1>
+                <div className="flex gap-2">
+                  {['home', 'search', 'downloads', 'preferences'].map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => handleTabChange(tab as any)}
+                      className={`px-4 py-2 rounded-lg transition-colors ${
+                        activeView === tab ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
+                      }`}
+                    >
+                      {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <div className="flex-1 overflow-y-auto">
+            {renderContent()}
+          </div>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 
