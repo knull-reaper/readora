@@ -40,7 +40,7 @@ const BookDetails: React.FC<BookDetailsProps> = ({ book, onBack }) => {
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10 -z-10" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5 -z-10" />
       
       <div className="max-w-7xl mx-auto p-6 relative z-10">
         <Button 
@@ -91,7 +91,7 @@ const BookDetails: React.FC<BookDetailsProps> = ({ book, onBack }) => {
             {/* Metadata Badges */}
             <div className="flex flex-wrap gap-3">
               {book.year && (
-                <Badge variant="secondary" className="px-4 py-2 text-sm font-semibold bg-primary/10 text-primary border-primary/20">
+                <Badge variant="secondary" className="px-4 py-2 text-sm font-semibold bg-primary/20 text-primary">
                   {book.year}
                 </Badge>
               )}
@@ -122,7 +122,7 @@ const BookDetails: React.FC<BookDetailsProps> = ({ book, onBack }) => {
               <Button 
                 onClick={handleDownload}
                 size="lg"
-                className="gradient-primary shadow-elegant hover:shadow-glow transition-all duration-300 flex items-center space-x-3 px-8 py-4 text-base font-semibold"
+                className="gradient-primary shadow-elegant hover:shadow-glow transition-all duration-300 flex items-center space-x-3 px-8 py-4 text-base font-semibold text-primary-foreground"
                 disabled={!book.download}
               >
                 <Download className="w-5 h-5" />
@@ -134,7 +134,7 @@ const BookDetails: React.FC<BookDetailsProps> = ({ book, onBack }) => {
                   variant="outline" 
                   size="lg"
                   onClick={() => window.open(book.preview, '_blank')}
-                  className="flex items-center space-x-3 px-8 py-4 text-base border-primary/30 hover:bg-primary/10 transition-all duration-300"
+                  className="flex items-center space-x-3 px-8 py-4 text-base border-primary/50 hover:bg-primary/10 transition-all duration-300"
                 >
                   <BookIcon className="w-5 h-5" />
                   <span>Preview</span>
@@ -144,7 +144,7 @@ const BookDetails: React.FC<BookDetailsProps> = ({ book, onBack }) => {
 
             {/* Description */}
             {book.description && (
-              <Card className="gradient-card shadow-card border-0 backdrop-blur-sm">
+              <Card className="gradient-card shadow-card backdrop-blur-sm">
                 <CardHeader className="pb-4">
                   <h3 className="text-2xl font-bold text-foreground">About this book</h3>
                 </CardHeader>

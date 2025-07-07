@@ -13,11 +13,11 @@ interface BookCardProps {
 const BookCard: React.FC<BookCardProps> = ({ book, onClick, showDescription = false }) => {
   return (
     <Card 
-      className="group cursor-pointer transition-all duration-500 hover:scale-[1.02] gradient-card shadow-card hover:shadow-elegant border-0 backdrop-blur-sm relative overflow-hidden animate-fade-in"
+      className="group cursor-pointer transition-all duration-500 hover:scale-[1.02] gradient-card shadow-card hover:shadow-elegant backdrop-blur-sm relative overflow-hidden animate-fade-in"
       onClick={() => onClick(book)}
     >
       {/* Gradient overlay for extra depth */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
       
       <div className="aspect-[3/4] overflow-hidden rounded-t-lg relative">
         <img
@@ -30,7 +30,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClick, showDescription = fa
           }}
         />
         {/* Image overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
       
       <CardContent className="p-6 space-y-3 relative z-20">
@@ -48,12 +48,12 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClick, showDescription = fa
         
         <div className="flex flex-wrap gap-2">
           {book.year && (
-            <Badge variant="secondary" className="text-xs font-semibold bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
+            <Badge variant="secondary" className="text-xs font-semibold bg-primary/20 text-primary hover:bg-primary/30 transition-colors">
               {book.year}
             </Badge>
           )}
           {book.pages && (
-            <Badge variant="outline" className="text-xs">
+            <Badge variant="outline" className="text-xs border-border/50">
               {book.pages}p
             </Badge>
           )}

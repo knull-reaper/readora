@@ -178,8 +178,8 @@ const Index = () => {
                   <h2 className="text-3xl font-bold text-foreground">
                     Recently Added Books
                   </h2>
-                  <div className="h-1 flex-1 mx-8 bg-gradient-to-r from-primary/20 via-primary/50 to-primary/20 rounded-full" />
-                  <div className="text-sm text-muted-foreground bg-primary/10 px-4 py-2 rounded-full">
+                  <div className="h-1 flex-1 mx-8 bg-gradient-to-r from-primary/30 via-primary/60 to-primary/30 rounded-full" />
+                  <div className="text-sm text-muted-foreground bg-primary/20 px-4 py-2 rounded-full border border-primary/30">
                     {recentBooks.length} books
                   </div>
                 </div>
@@ -196,7 +196,7 @@ const Index = () => {
       case 'search':
         return (
           <div className="min-h-screen relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10 -z-10" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5 -z-10" />
             
             <div className="p-6">
               <div className="max-w-7xl mx-auto">
@@ -240,15 +240,24 @@ const Index = () => {
 
       case 'downloads':
         return (
-          <div className="p-6">
-            <div className="max-w-7xl mx-auto">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Your Library ({downloads.length} books)
-              </h2>
-              <BookGrid
-                books={downloads}
-                onBookClick={handleBookClick}
-              />
+          <div className="min-h-screen relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5 -z-10" />
+            
+            <div className="p-6">
+              <div className="max-w-7xl mx-auto">
+                <div className="text-center py-12 animate-fade-in">
+                  <h1 className="text-4xl font-bold text-foreground mb-4">
+                    Your Library
+                  </h1>
+                  <p className="text-lg text-muted-foreground mb-8">
+                    {downloads.length} books in your personal collection
+                  </p>
+                </div>
+                <BookGrid
+                  books={downloads}
+                  onBookClick={handleBookClick}
+                />
+              </div>
             </div>
           </div>
         );
