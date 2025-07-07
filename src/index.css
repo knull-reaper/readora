@@ -155,32 +155,6 @@ All colors MUST be HSL.
     width: 100%;
     max-width: 100vw;
   }
-
-  /* Prevent keyboard zoom on inputs for mobile */
-  @media screen and (max-width: 768px) {
-    input[type="search"],
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    textarea,
-    select {
-      font-size: 16px !important;
-      transform-origin: left top;
-    }
-    
-    /* Ensure proper viewport handling when keyboard appears */
-    body {
-      position: fixed;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-    }
-    
-    #root {
-      height: 100vh;
-      overflow: hidden;
-    }
-  }
   
   /* Smooth scrolling */
   html {

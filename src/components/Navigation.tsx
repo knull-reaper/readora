@@ -28,7 +28,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange, theme, 
     <nav className="gradient-card backdrop-blur-sm border-b border-border/50 sticky top-0 z-50 shadow-card">
       <div className="w-full px-3">
         <div className="flex justify-between items-center h-12">
-          <div className="flex flex-1 items-center space-x-2 min-w-0">
+          <div className="flex items-center space-x-2 flex-shrink-0 min-w-0">
             {/* Compact logo for mobile */}
             <div className="w-7 h-7 bg-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold text-sm flex-shrink-0">
               R
@@ -36,7 +36,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange, theme, 
             <h1 className="text-base font-bold text-foreground truncate">Readora</h1>
           </div>
           
-          <div className="flex items-center">
+          <div className="flex items-center flex-shrink-0">
             {/* Navigation Tabs - more compact */}
             <div className="flex">
               {tabs.map((tab) => {

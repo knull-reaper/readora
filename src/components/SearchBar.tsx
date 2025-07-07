@@ -38,10 +38,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
           placeholder={placeholder}
           className="pl-10 pr-10 py-2.5 text-sm gradient-card border-border bg-background text-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary touch-manipulation"
           disabled={loading}
-          inputMode="search"
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
         />
         {query && (
           <Button
