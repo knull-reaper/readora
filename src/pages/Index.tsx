@@ -251,9 +251,7 @@ const Index = () => {
       case 'preferences':
         return (
           <PreferencesPanel
-            theme={theme}
             fontSize={fontSize}
-            onThemeChange={handleThemeChange}
             onFontSizeChange={handleFontSizeChange}
           />
         );
@@ -276,6 +274,8 @@ const Index = () => {
       <Navigation
         activeTab={activeView === 'book-details' ? 'home' : activeView as any}
         onTabChange={handleTabChange}
+        theme={theme}
+        onThemeChange={handleThemeChange}
       />
       {renderContent()}
     </div>
