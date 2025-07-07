@@ -156,37 +156,84 @@ const Index = () => {
     switch (activeView) {
       case 'home':
         return (
-          <div className="p-6">
-            <div className="max-w-7xl mx-auto">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Recently Added Books
-              </h2>
-              <BookGrid
-                books={recentBooks}
-                onBookClick={handleBookClick}
-                loading={loading}
-              />
+          <div className="min-h-screen relative overflow-hidden">
+            {/* Hero Section */}
+            <div className="relative py-16 px-6">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 -z-10" />
+              
+              <div className="max-w-7xl mx-auto text-center animate-fade-in">
+                <h1 className="text-5xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
+                  Welcome to <span className="text-gradient">Redora</span>
+                </h1>
+                <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+                  Discover, download, and collect your favorite books in one beautiful library.
+                </p>
+              </div>
+            </div>
+
+            {/* Books Section */}
+            <div className="px-6 pb-12">
+              <div className="max-w-7xl mx-auto">
+                <div className="flex items-center justify-between mb-8">
+                  <h2 className="text-3xl font-bold text-foreground">
+                    Recently Added Books
+                  </h2>
+                  <div className="h-1 flex-1 mx-8 bg-gradient-to-r from-primary/20 via-primary/50 to-primary/20 rounded-full" />
+                  <div className="text-sm text-muted-foreground bg-primary/10 px-4 py-2 rounded-full">
+                    {recentBooks.length} books
+                  </div>
+                </div>
+                <BookGrid
+                  books={recentBooks}
+                  onBookClick={handleBookClick}
+                  loading={loading}
+                />
+              </div>
             </div>
           </div>
         );
 
       case 'search':
         return (
-          <div className="p-6">
-            <div className="max-w-7xl mx-auto">
-              <div className="mb-8">
-                <SearchBar
-                  onSearch={handleSearch}
+          <div className="min-h-screen relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10 -z-10" />
+            
+            <div className="p-6">
+              <div className="max-w-7xl mx-auto">
+                {/* Search Header */}
+                <div className="text-center py-12 animate-fade-in">
+                  <h1 className="text-4xl font-bold text-foreground mb-4">
+                    Search Library
+                  </h1>
+                  <p className="text-lg text-muted-foreground mb-8">
+                    Find your next great read from thousands of books
+                  </p>
+                  
+                  <div className="max-w-2xl mx-auto">
+                    <SearchBar
+                      onSearch={handleSearch}
+                      loading={searchLoading}
+                      placeholder="Search for books, authors, or topics..."
+                    />
+                  </div>
+                </div>
+
+                {/* Results */}
+                {searchResults.length > 0 && (
+                  <div className="mb-6">
+                    <h2 className="text-2xl font-semibold text-foreground mb-6">
+                      Search Results ({searchResults.length} books)
+                    </h2>
+                  </div>
+                )}
+
+                <BookGrid
+                  books={searchResults}
+                  onBookClick={handleBookClick}
                   loading={searchLoading}
-                  placeholder="Search for books..."
+                  showDescription={true}
                 />
               </div>
-              <BookGrid
-                books={searchResults}
-                onBookClick={handleBookClick}
-                loading={searchLoading}
-                showDescription={true}
-              />
             </div>
           </div>
         );
@@ -230,7 +277,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+    <div className="min-h-screen transition-all duration-500">
       <Navigation
         activeTab={activeView === 'book-details' ? 'home' : activeView as any}
         onTabChange={handleTabChange}
