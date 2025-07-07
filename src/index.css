@@ -125,6 +125,18 @@ All colors MUST be HSL.
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
+    overflow-x: hidden;
+  }
+  
+  /* Hide scrollbars for native feel */
+  * {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  *::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
   }
   
   /* Android-specific optimizations */
@@ -132,9 +144,16 @@ All colors MUST be HSL.
     touch-action: manipulation;
   }
   
-  /* Improve scrolling on mobile */
-  * {
-    -webkit-overflow-scrolling: touch;
+  /* Native app feel */
+  html, body, #root {
+    height: 100%;
+    height: 100dvh;
+    overflow-x: hidden;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
   }
 }
 

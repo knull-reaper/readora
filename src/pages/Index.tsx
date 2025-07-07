@@ -156,7 +156,7 @@ const Index = () => {
     switch (activeView) {
       case 'home':
         return (
-          <div className="min-h-screen relative overflow-hidden">
+          <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5 -z-10" />
             
             <div className="p-6">
@@ -181,7 +181,7 @@ const Index = () => {
 
       case 'search':
         return (
-          <div className="min-h-screen relative overflow-hidden">
+          <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5 -z-10" />
             
             <div className="p-6">
@@ -226,7 +226,7 @@ const Index = () => {
 
       case 'downloads':
         return (
-          <div className="min-h-screen relative overflow-hidden">
+          <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5 -z-10" />
             
             <div className="p-6">
@@ -270,14 +270,16 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen transition-all duration-500">
+    <div className="h-screen flex flex-col overflow-hidden transition-all duration-500">
       <Navigation
         activeTab={activeView === 'book-details' ? 'home' : activeView as any}
         onTabChange={handleTabChange}
         theme={theme}
         onThemeChange={handleThemeChange}
       />
-      {renderContent()}
+      <div className="flex-1 overflow-y-auto">
+        {renderContent()}
+      </div>
     </div>
   );
 };
