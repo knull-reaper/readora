@@ -33,34 +33,29 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClick, showDescription = fa
         <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
       
-      <CardContent className="p-6 space-y-3 relative z-20">
-        <h3 className="font-bold text-base line-clamp-2 text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
+      <CardContent className="p-4 space-y-2 relative z-20">
+        <h3 className="font-bold text-sm line-clamp-2 text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
           {book.title}
         </h3>
         {book.subtitle && (
-          <p className="text-sm text-muted-foreground line-clamp-1 font-medium">
+          <p className="text-xs text-muted-foreground line-clamp-1 font-medium">
             {book.subtitle}
           </p>
         )}
-        <p className="text-sm text-muted-foreground line-clamp-1 opacity-75">
+        <p className="text-xs text-muted-foreground line-clamp-1 opacity-75">
           by {book.authors}
         </p>
         
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1">
           {book.year && (
             <Badge variant="secondary" className="text-xs font-semibold bg-primary/20 text-primary hover:bg-primary/30 transition-colors">
               {book.year}
             </Badge>
           )}
-          {book.pages && (
-            <Badge variant="outline" className="text-xs border-border/50">
-              {book.pages}p
-            </Badge>
-          )}
         </div>
         
         {showDescription && book.description && (
-          <p className="text-sm text-muted-foreground line-clamp-3 mt-3 leading-relaxed">
+          <p className="text-xs text-muted-foreground line-clamp-2 mt-2 leading-relaxed">
             {book.description}
           </p>
         )}

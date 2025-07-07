@@ -18,15 +18,15 @@ const BookGrid: React.FC<BookGridProps> = ({
 }) => {
   if (loading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
-        {[...Array(10)].map((_, i) => (
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
+        {[...Array(14)].map((_, i) => (
           <div key={i} className="animate-pulse">
-            <div className="aspect-[3/4] gradient-card rounded-lg mb-4 relative overflow-hidden">
+            <div className="aspect-[3/4] gradient-card rounded-lg mb-3 relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-muted/30 via-muted/50 to-muted/30 animate-glow"></div>
             </div>
-            <div className="space-y-3 p-2">
-              <div className="h-5 gradient-card rounded-md w-3/4"></div>
-              <div className="h-4 gradient-card rounded w-1/2"></div>
+            <div className="space-y-2 p-1">
+              <div className="h-4 gradient-card rounded-md w-3/4"></div>
+              <div className="h-3 gradient-card rounded w-1/2"></div>
               <div className="h-3 gradient-card rounded w-2/3"></div>
             </div>
           </div>
@@ -52,7 +52,7 @@ const BookGrid: React.FC<BookGridProps> = ({
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 auto-rows-fr">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 auto-rows-fr">
       {books.map((book, index) => (
         <div 
           key={book.id} 

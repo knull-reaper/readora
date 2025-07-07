@@ -157,28 +157,14 @@ const Index = () => {
       case 'home':
         return (
           <div className="min-h-screen relative overflow-hidden">
-            {/* Hero Section */}
-            <div className="relative py-16 px-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 -z-10" />
-              
-              <div className="max-w-7xl mx-auto text-center animate-fade-in">
-                <h1 className="text-5xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
-                  Welcome to <span className="text-gradient">Redora</span>
-                </h1>
-                <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                  Discover, download, and collect your favorite books in one beautiful library.
-                </p>
-              </div>
-            </div>
-
-            {/* Books Section */}
-            <div className="px-6 pb-12">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5 -z-10" />
+            
+            <div className="p-6">
               <div className="max-w-7xl mx-auto">
-                <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center justify-between mb-8 animate-fade-in">
                   <h2 className="text-3xl font-bold text-foreground">
                     Recently Added Books
                   </h2>
-                  <div className="h-1 flex-1 mx-8 bg-gradient-to-r from-primary/30 via-primary/60 to-primary/30 rounded-full" />
                   <div className="text-sm text-muted-foreground bg-primary/20 px-4 py-2 rounded-full border border-primary/30">
                     {recentBooks.length} books
                   </div>
